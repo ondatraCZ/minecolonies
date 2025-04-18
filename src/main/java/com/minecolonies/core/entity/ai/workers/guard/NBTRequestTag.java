@@ -74,6 +74,8 @@ public class NBTRequestTag extends RequestTag {
     }
 
     public boolean matches(@NotNull ItemStack item) {
-        return super.matches(item) && item.hasTag() && item.getTag().getString("AmmoId").equals(this.nbtTag.toString());
+        String tag = item.getTag() != null ? item.getTag().getString("AmmoId") : null;
+        boolean matches = tag != null && tag.equals(nbtTag.toString());
+        return matches;
     }
 }
