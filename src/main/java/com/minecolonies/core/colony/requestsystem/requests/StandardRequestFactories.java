@@ -20,6 +20,7 @@ import com.minecolonies.api.util.constant.Suppression;
 import com.minecolonies.api.util.constant.TypeConstants;
 import com.minecolonies.core.colony.requestable.SmeltableOre;
 import com.minecolonies.core.colony.requestsystem.requests.StandardRequests.*;
+import com.minecolonies.core.entity.ai.workers.guard.NBTRequestTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -344,6 +345,46 @@ public final class StandardRequestFactories
         public short getSerializationId()
         {
             return SerializationIdentifierConstants.ITEM_TAG_REQUEST_ID;
+        }
+    }
+
+    public static final class NbtTagRequestFactory implements IRequestFactory<NBTRequestTag, StandardRequests.NbtTagRequest> {
+        public NbtTagRequestFactory() {
+        }
+
+        public StandardRequests.NbtTagRequest getNewInstance(@NotNull NBTRequestTag input, @NotNull IRequester location, @NotNull IToken<?> token, @NotNull RequestState initialState) {
+            return new StandardRequests.NbtTagRequest(location, token, initialState, input);
+        }
+
+        public @NotNull TypeToken<StandardRequests.NbtTagRequest> getFactoryOutputType() {
+            return TypeToken.of(StandardRequests.NbtTagRequest.class);
+        }
+
+        public @NotNull TypeToken<NBTRequestTag> getFactoryInputType() {
+            return TypeToken.of(NBTRequestTag.class);
+        }
+
+        public @NotNull CompoundTag serialize(@NotNull IFactoryController controller, @NotNull StandardRequests.@NotNull NbtTagRequest request) {
+            return StandardRequestFactories.serializeToNBT(controller, request, NBTRequestTag::serialize);
+        }
+
+        @NotNull
+        public StandardRequests.@NotNull NbtTagRequest deserialize(@NotNull IFactoryController controller, @NotNull CompoundTag nbt) {
+            return (StandardRequests.NbtTagRequest)StandardRequestFactories.deserializeFromNBT(controller, nbt, NBTRequestTag::deserialize, (requested, token, requester, requestState) -> (StandardRequests.NbtTagRequest)controller.getNewInstance(TypeToken.of(StandardRequests.NbtTagRequest.class), requested, new Object[]{token, requester, requestState}));
+        }
+
+        @NotNull
+        public void serialize(@NotNull IFactoryController controller, @NotNull StandardRequests.@NotNull NbtTagRequest itemTagRequest, FriendlyByteBuf packetBuffer) {
+            StandardRequestFactories.serializeToFriendlyByteBuf(controller, itemTagRequest, packetBuffer, NBTRequestTag::serialize);
+        }
+
+        @NotNull
+        public StandardRequests.@NotNull NbtTagRequest deserialize(@NotNull IFactoryController controller, @NotNull FriendlyByteBuf buffer) throws Throwable {
+            return (StandardRequests.NbtTagRequest)StandardRequestFactories.deserializeFromFriendlyByteBuf(controller, buffer, NBTRequestTag::deserialize, (requested, token, requester, requestState) -> (StandardRequests.NbtTagRequest)controller.getNewInstance(TypeToken.of(StandardRequests.NbtTagRequest.class), requested, new Object[]{token, requester, requestState}));
+        }
+
+        public short getSerializationId() {
+            return 61;
         }
     }
 

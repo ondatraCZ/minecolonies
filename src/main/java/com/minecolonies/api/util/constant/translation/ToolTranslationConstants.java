@@ -89,7 +89,8 @@ public class ToolTranslationConstants
     public static final String TOOL_LUMBERJACK_SCEPTER_AREA_SET       = "item.minecolonies.scepterlumberjack.restrictionset";
     @NonNls
     public static final String TOOL_LUMBERJACK_SCEPTER_AREA_TOO_BIG   = "item.minecolonies.scepterlumberjack.restrictiontoobig";
-
+    @NonNls
+    public static final String TOOL_TYPE_GUN   = "com.minecolonies.coremod.tooltype.gun";
     @NonNls
     public static final String TOOL_PERMISSION_SCEPTER_SET_MODE        = "com.minecolonies.coremod.item.permissionscepter.setmode";
     @NonNls

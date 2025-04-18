@@ -24,15 +24,19 @@ import com.minecolonies.core.colony.buildings.moduleviews.WorkerBuildingModuleVi
 import com.minecolonies.core.colony.jobs.views.CrafterJobView;
 import com.minecolonies.core.colony.jobs.views.DmanJobView;
 import com.minecolonies.core.colony.requestable.SmeltableOre;
+import com.minecolonies.core.entity.ai.workers.guard.NBTRequestTag;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,7 +97,7 @@ public final class StandardRequests
         public List<ItemStack> getDisplayStacks()
         {
             return getRequest().getRequestedItems();
-        }    
+        }
     }
 
     /**
@@ -212,6 +216,53 @@ public final class StandardRequests
         @Override
         public List<ItemStack> getDisplayStacks()
         {
+            return Collections.unmodifiableList(this.stacks);
+        }
+    }
+
+    public static class NbtTagRequest extends AbstractRequest<NBTRequestTag> {
+        private List<ItemStack> stacks;
+
+        public NbtTagRequest(@NotNull IRequester requester, @NotNull IToken<?> token, @NotNull NBTRequestTag requested) {
+            super(requester, token, requested);
+            Item item = (Item)ForgeRegistries.ITEMS.getValue(requested.getTag().location());
+            CompoundTag tag = new CompoundTag();
+            tag.putString("AmmoId", requested.nbtTag.toString());
+            this.stacks = new ArrayList();
+            ItemStack stack = new ItemStack(item, requested.getCount());
+            stack.setTag(tag);
+            this.stacks.add(stack);
+        }
+
+        public NbtTagRequest(@NotNull IRequester requester, @NotNull IToken<?> token, @NotNull RequestState state, @NotNull NBTRequestTag requested) {
+            super(requester, token, state, requested);
+            Item item = ForgeRegistries.ITEMS.getValue(requested.getTag().location());
+            CompoundTag tag = new CompoundTag();
+            tag.putString("AmmoId", requested.nbtTag.toString());
+            this.stacks = new ArrayList();
+            ItemStack stack = new ItemStack(item, requested.getCount());
+            stack.setTag(tag);
+            this.stacks.add(stack);
+        }
+
+        public @NotNull Component getShortDisplayString() {
+            MutableComponent combined = Component.literal("");
+            combined.append(Component.literal(this.getRequest().getCount() + " "));
+            String var10000 = this.getRequest().getTag().toString().toLowerCase().replace("namedtag[", "").replace(':', '.');
+            String tagKey = "com.minecolonies.coremod.tag." + var10000.replace("]", "");
+            MutableComponent tagText = Component.literal(tagKey);
+            if (!tagText.getString().equals(tagKey)) {
+                combined.append(Component.literal("#").append(tagText));
+            } else if (!this.stacks.isEmpty()) {
+                combined.append(Component.literal("#").append(((ItemStack)this.stacks.get(0)).getHoverName()));
+            } else {
+                combined.append(Component.literal("#").append(Component.literal(this.getRequest().getTag().toString())));
+            }
+
+            return combined;
+        }
+
+        public List<ItemStack> getDisplayStacks() {
             return Collections.unmodifiableList(this.stacks);
         }
     }

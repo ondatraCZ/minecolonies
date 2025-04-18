@@ -873,6 +873,7 @@
   "com.minecolonies.coremod.tooltype.chestplate": "Chestplate",
   "com.minecolonies.coremod.tooltype.boots": "Boots",
   "com.minecolonies.coremod.tooltype.lighter": "Flint and Steel",
+  "com.minecolonies.coremod.tooltype.gun": "Gun",
 
   "com.minecolonies.coremod.armorlevel.0": "Leather",
   "com.minecolonies.coremod.armorlevel.1": "Gold",
@@ -2337,6 +2338,8 @@
   "com.minecolonies.building.largequarry": "Large Quarry",
   "com.minecolonies.coremod.gui.quarry.desc": "To start the Quarry construct a Mine, hire a Quarrier and assign the Quarrier to the Quarry",
   "com.minecolonies.coremod.gui.workerhuts.druid": "Druid",
+  "com.minecolonies.coremod.gui.workerhuts.gunner": "Gunner",
+  "com.minecolonies.job.gunner":"Gunner",
   "item.minecolonies.mistletoe": "Mistletoe",
   "item.minecolonies.magicpotion": "Magic Potion",
 

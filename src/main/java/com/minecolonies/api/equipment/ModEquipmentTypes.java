@@ -15,6 +15,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
+import com.tacz.guns.api.item.gun.AbstractGunItem;
 
 import java.util.Set;
 import java.util.function.Consumer;
@@ -42,6 +43,7 @@ public class ModEquipmentTypes
     public static final RegistryObject<EquipmentTypeEntry> chestplate;
     public static final RegistryObject<EquipmentTypeEntry> boots;
     public static final RegistryObject<EquipmentTypeEntry> flint_and_steel;
+    public static final RegistryObject<EquipmentTypeEntry> gun;
 
     static
     {
@@ -151,6 +153,12 @@ public class ModEquipmentTypes
                        .setIsEquipment((itemStack, equipmentType) -> itemStack.getItem() instanceof FlintAndSteelItem)
                        .setEquipmentLevel((itemStack, equipmentType) -> durabilityBasedLevel(itemStack, Items.FLINT_AND_STEEL.getMaxDamage()))
                   .build());
+        gun = register("gun",
+                builder -> builder.setDisplayName(Component.translatable(ToolTranslationConstants.TOOL_TYPE_GUN))
+                        .setIsEquipment(((itemStack, equipmentTypeEntry) -> itemStack.getItem() instanceof AbstractGunItem ))
+                        .setEquipmentLevel(((itemStack, equipmentTypeEntry) -> 1))
+                        .build()
+        );
     }
 
     /**

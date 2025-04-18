@@ -56,3 +56,8 @@ gradle/local.configuration.gradle
 !src/main/assets/minecolonies/lang/manual_en_us.json
 
 runs/
+*.log
+*.blueprint
+src/main/resources/assets/minecolonies/gui/layouthuts/layouthutpageactionswoinv.xml
+src/datagen/generated/minecolonies/data/minecolonies/damage_type/ccamphiefbarbarian.json
+src/main/resources/assets/minecolonies/gui/windowtestgui.xml

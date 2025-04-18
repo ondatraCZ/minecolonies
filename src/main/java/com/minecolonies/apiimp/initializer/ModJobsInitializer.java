@@ -41,7 +41,11 @@ public final class ModJobsInitializer
           .setJobViewProducer(() -> DmanJobView::new)
           .setRegistryName(ModJobs.DELIVERY_ID)
           .createJobEntry());
-
+        ModJobs.gunner = register(DEFERRED_REGISTER, ModJobs.GUNNER_ID.getPath(), () -> new JobEntry.Builder()
+                .setJobProducer(JobGunner::new)
+                .setJobViewProducer(()->DefaultJobView::new)
+                .setRegistryName(ModJobs.GUNNER_ID)
+                .createJobEntry());
         ModJobs.miner = register(DEFERRED_REGISTER, ModJobs.MINER_ID.getPath(), () -> new JobEntry.Builder()
           .setJobProducer(JobMiner::new)
           .setJobViewProducer(() -> DefaultJobView::new)

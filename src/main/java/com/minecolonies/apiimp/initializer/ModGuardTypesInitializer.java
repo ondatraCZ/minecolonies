@@ -10,6 +10,8 @@ import com.minecolonies.core.colony.jobs.JobKnight;
 import com.minecolonies.core.colony.jobs.JobRanger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
+import com.minecolonies.core.colony.jobs.JobGunner;
+
 
 import static com.minecolonies.api.util.constant.translation.JobTranslationConstants.*;
 
@@ -56,5 +58,15 @@ public final class ModGuardTypesInitializer
           .setRegistryName(ModGuardTypes.DRUID_ID)
           .setClazz(JobDruid.class)
           .createGuardType());
+
+        ModGuardTypes.gunner = DEFERRED_REGISTER.register(ModGuardTypes.GUNNER_ID.getPath(), () -> new GuardType.Builder()
+                .setJobTranslationKey(JOB_GUNNER)
+                .setButtonTranslationKey(JOB_GUNNER_BUTTON)
+                .setPrimarySkill(Skill.Focus)
+                .setSecondarySkill(Skill.Dexterity)
+                .setRegistryName(ModGuardTypes.GUNNER_ID)
+                .setJobEntry(()-> ModJobs.gunner.get())
+                .setClazz(JobGunner.class)
+                .createGuardType());
     }
 }

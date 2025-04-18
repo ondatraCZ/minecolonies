@@ -80,6 +80,7 @@ public final class StandardFactoryControllerInitializer
         StandardFactoryController.getInstance().registerNewFactory(new StandardDataStoreManager.Factory());
         StandardFactoryController.getInstance().registerNewFactory(new StandardRequestFactories.PublicCraftingRequestFactory());
         StandardFactoryController.getInstance().registerNewFactory(new StandardRequestFactories.PrivateCraftingRequestFactory());
+        StandardFactoryController.getInstance().registerNewFactory(new StandardRequestFactories.NbtTagRequestFactory());
 
         StandardFactoryController.getInstance().registerNewFactory(new SettingsFactories.BoolSettingFactory());
         StandardFactoryController.getInstance().registerNewFactory(new SettingsFactories.StringSettingsFactory());

@@ -9,6 +9,7 @@ import com.minecolonies.api.colony.requestsystem.requestable.deliveryman.Pickup;
 import com.minecolonies.api.util.Log;
 import com.minecolonies.core.colony.requestable.SmeltableOre;
 import com.minecolonies.core.colony.requestsystem.requests.StandardRequests;
+import com.minecolonies.core.entity.ai.workers.guard.NBTRequestTag;
 
 public class RequestSystemInitializer
 {
@@ -28,5 +29,7 @@ public class RequestSystemInitializer
         RequestMappingHandler.registerRequestableTypeMapping(PrivateCrafting.class, StandardRequests.PrivateCraftingRequest.class);
         RequestMappingHandler.registerRequestableTypeMapping(RequestTag.class, StandardRequests.ItemTagRequest.class);
         RequestMappingHandler.registerRequestableTypeMapping(MinimumStack.class, StandardRequests.MinStackRequest.class);
+        RequestMappingHandler.registerRequestableTypeMapping(NBTRequestTag.class, NBTRequestTag.class);
+        RequestMappingHandler.registerRequestableTypeMapping(NBTRequestTag.class, StandardRequests.NbtTagRequest.class);
     }
 }

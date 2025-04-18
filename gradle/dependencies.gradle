@@ -15,6 +15,10 @@ repositories {
         name "Dynamic Trees"
         url "https://harleyoconnor.com/maven"
     }
+    maven{
+        name "Gun mod"
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies {
@@ -38,6 +42,10 @@ dependencies {
     }
 
     implementation fg.deobf("com.ldtteam:datagenerators:${project.dataGeneratorsVersion}:universal") {
+        transitive = false
+    }
+    implementation fg.deobf('curse.maven:timeless-and-classics-zero-1028108:5529117-sources-5529578')
+    {
         transitive = false
     }
 
