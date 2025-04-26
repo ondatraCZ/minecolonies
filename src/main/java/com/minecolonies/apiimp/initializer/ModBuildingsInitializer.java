@@ -68,7 +68,7 @@ public final class ModBuildingsInitializer
           .addBuildingModuleProducer(KNIGHT_BARRACKS_WORK)
           .addBuildingModuleProducer(RANGER_BARRACKS_WORK)
           .addBuildingModuleProducer(DRUID_BARRACKS_WORK)
-          .addBuildingModuleProducer(GUNNER_TOWER_WORK)
+          .addBuildingModuleProducer(GUNNER_BARRACKS_WORK)
           .addBuildingModuleProducer(GUARD_TOOL)
           .addBuildingModuleProducer(GUARD_ENTITY_LIST)
           .addBuildingModuleProducer(GUARD_SETTINGS)
