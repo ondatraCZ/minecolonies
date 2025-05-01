@@ -191,26 +191,27 @@ public class GunnerCombatAI extends AttackMoveAI<EntityCitizen> {
     @Override
     protected double getAttackDistance()
     {
-        int attackDist = BASE_DISTANCE_FOR_RANGED_ATTACK;
-        // + 1 Blockrange per building level for a total of +5 from building level
+        int attackDist = 50;
+        int skillMult = 1;
+        // + 1 mult for every level
         if (user.getCitizenData().getWorkBuilding() != null)
         {
-            attackDist += user.getCitizenData().getWorkBuilding().getBuildingLevel()*5;
+            skillMult = user.getCitizenData().getWorkBuilding().getBuildingLevel();
         }
-        // ~ +1 each three levels for a total of +10 from guard level
+        // ~ half of adaptability * building level
         if (user.getCitizenData() != null)
         {
-            attackDist += (user.getCitizenData().getCitizenSkillHandler().getLevel(Skill.Adaptability) / 50.0f) * 45;
+            attackDist += (user.getCitizenData().getCitizenSkillHandler().getLevel(Skill.Adaptability) * skillMult)/2;
         }
 
         if (target != null)
         {
-            attackDist += user.getY() - target.getY();
+            attackDist += (int) (user.getY() - target.getY());
         }
-
-        if (((AbstractBuildingGuards) user.getCitizenData().getWorkBuilding()).getTask().equals(GuardTaskSetting.GUARD))
+        // cap range at 150 if not guarding
+        if (!((AbstractBuildingGuards) user.getCitizenData().getWorkBuilding()).getTask().equals(GuardTaskSetting.GUARD))
         {
-            attackDist += 30;
+            attackDist = Math.min(150, attackDist);
         }
 
         return attackDist;
@@ -240,7 +241,7 @@ public class GunnerCombatAI extends AttackMoveAI<EntityCitizen> {
             job.setPathingOptions(combatPathingOptions);
             return pathResult;
         }
-        else if (BlockPosUtil.getDistance2D(target.blockPosition(), user.blockPosition()) >= 20)
+        else if (BlockPosUtil.getDistance2D(target.blockPosition(), user.blockPosition()) >= getAttackDistance())
         {
             final PathJobMoveToLocation job = new PathJobMoveToLocation(user.level, PathfindingUtils.prepareStart(user), target.blockPosition(), 200, user);
             final PathResult pathResult = ((MinecoloniesAdvancedPathNavigate) user.getNavigation()).setPathJob(job, null, getCombatMovementSpeed(), true);
@@ -308,7 +309,7 @@ public class GunnerCombatAI extends AttackMoveAI<EntityCitizen> {
     {
         if (((AbstractBuildingGuards) user.getCitizenData().getWorkBuilding()).getTask().equals(GuardTaskSetting.GUARD))
         {
-            return Y_VISION + 25;
+            return Y_VISION + 50;
         }
 
         return Y_VISION;

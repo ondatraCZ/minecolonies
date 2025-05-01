@@ -63,16 +63,17 @@ public class EntityAIGunner extends AbstractEntityAIGuard<JobGunner, AbstractBui
                 64,
                 worker.getInventoryCitizen());
         hasTool();
-        if (InventoryUtils.getItemCountInItemHandler(worker.getInventoryCitizen(), this::itemIsCorrectAmmo) < 64 && super.hasTool())
-        {
-            Optional<CommonGunIndex> optional = TimelessAPI.getCommonGunIndex(((AbstractGunItem)getGunStack().getItem()).getGunId(getGunStack()));
-            if(optional.isPresent()) {
-                CommonGunIndex gunIndex = optional.get();
-                ResourceLocation ammoId = gunIndex.getGunData().getAmmoId();
-                CheckOrCreateAmmoRequest(TagKey.create(BuiltInRegistries.ITEM.key(), ammoId).location(), gunIndex.getGunData().getAmmoAmount()*5, 1);
+        Optional<CommonGunIndex> optional = TimelessAPI.getCommonGunIndex(((AbstractGunItem)getGunStack().getItem()).getGunId(getGunStack()));
+        if(optional.isPresent()) {
+            CommonGunIndex gunIndex = optional.get();
+            ResourceLocation ammoId = gunIndex.getGunData().getAmmoId();
+            int ammoInInventory = InventoryUtils.getItemCountInItemHandler(worker.getInventoryCitizen(), this::itemIsCorrectAmmo);
+            if (ammoInInventory < gunIndex.getGunData().getAmmoAmount()*10 && super.hasTool())
+            {
+                CheckOrCreateAmmoRequest(TagKey.create(BuiltInRegistries.ITEM.key(), ammoId).location(), gunIndex.getGunData().getAmmoAmount()*10-ammoInInventory, 1);
             }
+        }
 
-            }
     }
 
     public boolean itemIsCorrectAmmo(ItemStack item)
